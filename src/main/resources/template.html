@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>LAPPS Discriminators</title>
+</head>
+<body>
+    <h1>LAPPS Discriminators</h1>
+        <% discriminators.each { d -> %>
+            <h2>${d.name}</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <td>${d.id}</td>
+                </tr>
+                <tr>
+                    <th>URI</th>
+                    <td>${d.uri}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">${d.description}</td>
+                </tr>
+            </table>
+            <% if (d.parents.size() > 0) {
+                <h3>Ancestors</h3>
+                <ul>
+                    <%
+                        parents.each {
+                    %>
+                            <li>${it}</li>
+                    <%
+                        }
+                    %>
+                </ul>
+            <% } %>
+        <% } %>
+</body>
+</html>

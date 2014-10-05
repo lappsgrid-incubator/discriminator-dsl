@@ -1,0 +1,91 @@
+/*
+ * This is a Groovy MarkupBuilder DSL file.  See the MarkupBuilder
+ * documentation for more details.
+ */
+
+ html {
+    head {
+        title "LAPPS Discriminators"
+        link rel:'stylesheet', type:'text/css', href:'style.css'
+    }
+    body(id:'container') {
+        div(id:'main') {
+            h1 'LAPPS Discriminators'
+            p class:'note', 'This information is posted for comment and discussion only.'
+            p class:'note', 'This file is machine generated and should not be edited.'
+            p """This page lists the URI currently used in the LAPPS project. A service
+             on the LAPPS grid may recognized other URI, this is simply the inventory
+             that we use internally.
+            """
+            table {
+                tr {
+                    th 'ID'
+                    th 'Short name'
+                    th 'URI / Media-Type'
+                }
+                discriminators.each { type ->
+                    tr {
+                        td type.id
+                        td {
+                            a(name:"top.${type.name}")
+                            a(href:"#${type.name}", type.name)
+                        }
+                        td {
+                            if (type.uri.startsWith('http://vocab.lappsgrid.org')) {
+                                a href:type.uri, type.uri
+                            }
+                            else {
+                                span type.uri
+                            }
+                        }
+                    }
+                }
+            }
+            h1 'Descriptions'
+            p 'These descriptions need work...'
+            discriminators.each { type ->
+                a(name:type.name)
+                h2 type.name
+                table {
+//                    tr {
+//                        td(class:'left', type.name)
+//                    }
+                    tr {
+                        th width:'10%', "ID"
+                        td type.id
+                    }
+                    tr {
+                        th "URI"
+                        if (type.uri.startsWith('http://vocab.lappsgrid.org')) {
+                            td {
+                                a href:type.uri, type.uri
+                            }
+                        }
+                        else {
+                            td type.uri
+                        }
+                    }
+                    tr {
+                        td(colspan:2, type.description)
+                    }
+                }
+                if (type.ancestors.size() > 0) {
+                    div(class:'ancestors') {
+                        h3 'Ancestors'
+                        ul {
+                            type.ancestors.each { parent ->
+                                li {
+                                    def link = parent.toString()
+                                    a(href:"#${link}", link)
+                                }
+                           }
+                        }
+                    }
+                }
+                p(class:'back') {
+                    a href:"#top.${type.name}", 'Back'
+                }
+            }
+        }
+    }
+}
