@@ -3,4 +3,8 @@ branches:
   only:
     - master
     - develop
-    
+before-script:
+  - curl -O http://www.anc.org/tools/settings.xml
+
+script:
+  - mvn -s settings.xml clean  && mvn test -s settings.xml
