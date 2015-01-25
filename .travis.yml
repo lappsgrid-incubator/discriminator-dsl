@@ -3,6 +3,10 @@ branches:
   only:
     - master
     - develop
+before-install:
+  - curl -O http://www.anc.org/tools/settings.xml
+install: mvn -s settings.xml install -DkskipTests=true
+
 before-script:
   - curl -O http://www.anc.org/tools/settings.xml
 
