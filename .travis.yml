@@ -5,10 +5,5 @@ branches:
     - develop
 before-install:
   - curl -O http://www.anc.org/tools/settings.xml
-install: mvn -s settings.xml install -DkskipTests=true
-
-before-script:
-  - curl -O http://www.anc.org/tools/settings.xml
-
-script:
-  - mvn -s settings.xml clean  && mvn test -s settings.xml
+  - mkdir ~/.m2
+  - mv settings.xml ~/.m2/
