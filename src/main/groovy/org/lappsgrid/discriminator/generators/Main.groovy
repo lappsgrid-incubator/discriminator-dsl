@@ -82,7 +82,7 @@ class Main {
         if (dsl == null) {
             return
         }
-        URL templateUrl = loader.getResource('alternate.markup')
+        URL templateUrl = loader.getResource('template.markup')
         TemplateEngine engine = new MarkupBuilderTemplateEngine(templateUrl)
         String html = engine.generate([bindings:dsl.bindings, discriminators:dsl.discriminators])
         File file = new File(outputPath)

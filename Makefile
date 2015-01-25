@@ -51,7 +51,10 @@ site:
 upload:
 	anc-put $(HTML) $(SERVER)
 	if [ -e $(SITE)/$(ZIP) ] ; then anc-put $(SITE)/$(ZIP) $(SERVER) ; fi
-	
+
+css:
+	cp src/main/resources/*.css target
+
 copy:
 	cp $(TYPES) $(RESOURCES)
 	cp target/Constants.java $(JAVA)
