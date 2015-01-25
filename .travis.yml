@@ -3,7 +3,3 @@ branches:
   only:
     - master
     - develop
-before-install:
-  - curl -O http://www.anc.org/tools/settings.xml
-  - mkdir ~/.m2
-  - mv settings.xml ~/.m2/
