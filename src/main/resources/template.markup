@@ -6,14 +6,14 @@
 html {
     head {
         title "LAPPS Discriminators URI"
-        link rel:'stylesheet', type:'text/css', href:'lappsstyle.css'
+        link rel:'stylesheet', type:'text/css', href:'http://vocab.lappsgrid.org/discriminators.css'
     }
     body {
         div(id:'container') {
             div(id:'intro') {
                 div(id:'pageHeader') {
                     h1 'LAPPS Web Service URI Inventory'
-                    h3 '(aka Discriminators)'
+                    h2 '(aka Discriminators)'
                 }
             }
             div(id:'mainContent') {
@@ -81,10 +81,21 @@ html {
                                 td type.uri
                             }
                         }
+                        if (type.ancestors.size() > 0) {
+                            th 'Ancestors'
+                            td {
+                                def makeLink = { name ->
+                                    builder.a(href:"#${name}", name)
+                                }
+                                type.ancestors.collect { makeLink(it) }.join(", ")
+                            }
+                        }
                         tr {
-                            td(colspan:2, type.description)
+                            td()
+                            td type.description
                         }
                     }
+                    /*
                     if (type.ancestors.size() > 0) {
                         div(class:'ancestors') {
                             h3 'Ancestors'
@@ -98,6 +109,7 @@ html {
                             }
                         }
                     }
+                    */
                     p(class:'back') {
                         a href:"#top.${type.name}", 'Back'
                     }

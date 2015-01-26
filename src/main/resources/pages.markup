@@ -2,11 +2,17 @@
 html {
     head {
         title "${page.name}"
-        link rel:'stylesheet', type:'text/css', href:'http://vocab.lappsgrid.org/style.css'
+        link rel:'stylesheet', type:'text/css', href:'http://vocab.lappsgrid.org/discriminators.css'
     }
     body(id:'container') {
-        div(id:'main') {
-            h1 "${page.name}"
+        div(id:'intro') {
+            div(id:'pageHeader') {
+                h1 'LAPPS Web Service URI Inventory'
+                h2 "${page.name}"
+            }
+        }
+        div(id:'mainContent') {
+            //h1 "${page.name}"
             p class:'note', 'This information is posted for comment and discussion only.'
             p class:'note', 'This file is machine generated and should not be edited.'
             def discriminators = page.discriminators
