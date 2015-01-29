@@ -29,11 +29,15 @@ html {
                     }
                 }
                 discriminators[1..-1].each { d ->
-                    a(name:"${d.fragment.substring(1)}")
-                    h3 d.discriminator.uri
+                    a name:"${d.fragment.substring(1)}", ''
+                    h2 d.discriminator.uri
                     p d.discriminator.description
                 }
             }
+        }
+        div(class:'footer') {
+            def year = Calendar.getInstance().get(Calendar.YEAR)
+            mkp.yieldUnescaped "<p>Copyright &copy; ${year} The Language Application Grid. All rights reserved.</p>"
         }
     }
 }
