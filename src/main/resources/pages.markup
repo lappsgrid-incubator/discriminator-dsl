@@ -1,4 +1,6 @@
-// Template used to generate a single HTML page
+/*
+ * Template used to generate a single HTML page for a discriminator.
+ */
 html {
     head {
         title "${page.name}"

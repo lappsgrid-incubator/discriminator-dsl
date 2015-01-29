@@ -11,6 +11,8 @@ HTML=target/discriminators.html
 SITE=target/vocab
 ZIP=ns.zip
 SCRIPT=$(HOME)/bin/d
+DISCRIMINATOR_TEMPLATE=src/main/resources/template.markup
+PAGE_TEMPLATE=src/main/resources/pages.markup
 
 help:
 	@echo
@@ -18,12 +20,18 @@ help:
 	@echo "   help : prints this help message."
 	@echo "  clean : removed artifacts from previous builds"
 	@echo "    jar : generates an executable jar file."
+	@echo "install : copies jar and start script to $(HOME)/bin" 
 	@echo "   java : generates the Constants.java file."
 	@echo "   html : generates HTML documentation for the discriminators."
+	@echo "  pages : generates indivdual html pages for each discriminator." 
 	@echo "  types : generates the DataTypes.txt file for the discriminators."
 	@echo "   site : generates vocabulary website."
+	@echo "    zip : creates a zip archive of the vocab website."
 	@echo " upload : uploads the discriminators.html file to the server."
 	@echo "   copy : copies the Constants.java and DataTypes.txt file to the Discriminators project."
+	@echo "   docs : generates all documentation (html, types, site) and uploads/copies"
+	@echo "    css : copies css files to target directory for testing."
+	@echo " remote : copies the discriminators.css file to the server."
 	@echo "    all : does all of the above."
 	@echo
 	 
@@ -34,8 +42,11 @@ jar:
 	mvn package
 	
 html:
-	java -jar $(TARGET_JAR) -h $(HTML) $(CONFIG)
+	java -jar $(TARGET_JAR) -h $(HTML) -t $(DISCRIMINATOR_TEMPLATE) $(CONFIG)
 	
+pages:
+	java -jar $(TARGET_JAR) -p $(SITE) -t $(PAGE_TEMPLATE) $(CONFIG)
+
 install:
 	cp $(TARGET_JAR) $(HOME)/bin
 	echo "#!/bin/bash" > $(SCRIPT)
@@ -52,20 +63,20 @@ types:
 zip:
 	pushd $(SITE) > /dev/null ; zip -r $(ZIP) ns ; popd > /dev/null
 
-site:
-	java -jar $(TARGET_JAR) -p $(SITE) $(CONFIG)
+site: pages
 	pushd $(SITE) > /dev/null ; zip -r $(ZIP) ns ; popd > /dev/null
 	#zip -r $(ZIP) $(SITE)/ns
 		
 upload:
 	anc-put $(HTML) $(SERVER)
 	if [ -e $(SITE)/$(ZIP) ] ; then anc-put $(SITE)/$(ZIP) $(SERVER) ; fi
+	anc-put src/main/resources/discriminators.css $(SERVER)
 
 css:
 	cp src/main/resources/*.css target
 	
 remote:
-	anc-put src/main/resources/discriminators.css /home/www/anc/LAPPS/vocab
+	anc-put src/main/resources/discriminators.css $(SERVER)
 	
 copy:
 	cp $(TYPES) $(RESOURCES)

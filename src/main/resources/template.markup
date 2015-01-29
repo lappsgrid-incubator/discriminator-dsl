@@ -1,6 +1,6 @@
 /*
- * This is a Groovy MarkupBuilder DSL file.  See the MarkupBuilder
- *  documentation for more details.
+ * This template is used to generate the discriminators.html file for the
+ * LAPPS vocabulary web site.
  */
 
 html {
