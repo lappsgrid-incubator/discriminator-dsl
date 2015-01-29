@@ -1,3 +1,8 @@
+.footer {
+    font-size: x-small;
+    text-align: center;
+}
+
 .fixed {
     width: 15%;
 }
@@ -7,6 +12,12 @@
 }
 td {
 	vertical-align: top;
+    text-align: left;
+}
+
+th {
+    vertical-align: top;
+    text-align: left;
 }
 
 .definition {
@@ -64,9 +75,10 @@ ul.tree { list-style:none; }
 body
 {
     color: #3A4956;
-    font-size: 75%;
+    /* font-size: 75%; */
+    font-size: 14px;
     font-family: "Lucida Grande" , "Lucida Sans Unicode" , Verdana, Tahoma, Arial, sans-serif;
-    line-height: 160%;
+    /* line-height: 160%; */
     margin: 0;
     padding: 0;
 }
@@ -138,6 +150,17 @@ pre
     font-family: Helvetica, Arial, sans-serif;
     letter-spacing: -1px;
 }
+
+#pageHeader h2 {
+    color: #fff;
+    margin-left: 40px;
+}
+
+#pageHeader h3 {
+    color: #fff;
+    left: 40px;
+}
+
 #pageHeader a:link, #pageHeader a:hover, #pageHeader a:visited
 {
     color: #fff;
@@ -345,10 +368,11 @@ a.sameas:hover {color:gray;text-decoration:none;}
     font-size: small;
 }
 
+/*
 tbody {
     font-size: small;
 }
-
+*/
 #element
 {
     font-size: x-large;

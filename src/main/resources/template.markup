@@ -6,21 +6,20 @@
 html {
     head {
         title "LAPPS Discriminators URI"
-        link rel:'stylesheet', type:'text/css', href:'lappsstyle.css'
+        link rel:'stylesheet', type:'text/css', href:'http://vocab.lappsgrid.org/discriminators.css'
     }
     body {
         div(id:'container') {
             div(id:'intro') {
                 div(id:'pageHeader') {
                     h1 'LAPPS Web Service URI Inventory'
-                    h3 '(aka Discriminators)'
+                    h2 '(aka Discriminators)'
                 }
             }
             div(id:'mainContent') {
-                h1 "LAPPS Discriminators"
                 p """The LAPPS Web Service URI Inventory is a list of the URI
-                    used in LAPPS web services.  Services deployed to a LAPPS node may
-                    use other URI, but these is a complete list of the URI used by
+                    recognized by the core LAPPS infrastructure. Web services deployed to a
+                    LAPPS node may use other URI, but this list of the URI used by
                     the LAPPS infrastructure.
                 """
                 p """The URI fall into one of three conceptual categories"""
@@ -35,7 +34,7 @@ html {
                     li """URI used as commands and return codes used by LAPPS web services.
                     """
                 }
-
+                a(name:'top', '')
                 table {
                     tr {
                         th 'ID'
@@ -63,9 +62,9 @@ html {
                 h1 'Descriptions'
                 p 'These descriptions need work...'
                 discriminators.each { type ->
-                    a(name:type.name)
+                    a(name:type.name, '')
                     h2 type.name
-                    table {
+                    table(class:'definition-table') {
                         tr {
                             th width:'10%', "ID"
                             td type.id
@@ -81,28 +80,38 @@ html {
                                 td type.uri
                             }
                         }
-                        tr {
-                            td(colspan:2, type.description)
-                        }
-                    }
-                    if (type.ancestors.size() > 0) {
-                        div(class:'ancestors') {
-                            h3 'Ancestors'
-                            ul {
-                                type.ancestors.each { parent ->
-                                    li {
-                                        def link = parent.toString()
-                                        a(href:"#${link}", link)
-                                    }
-                               }
+                        if (type.ancestors.size() > 0) {
+                            th 'Ancestors'
+                            td {
+                                def makeLink = { name ->
+                                    builder.a(href:"#${name}", name)
+                                }
+                                type.ancestors.collect { makeLink(it) }.join(", ")
                             }
                         }
+                        tr {
+                            td()
+                            td type.description
+                        }
                     }
-                    p(class:'back') {
-                        a href:"#top.${type.name}", 'Back'
+                    /*
+                    p(class:'backtotop') {
+                        span 'Back to ('
+                        a href:"#top.${type.name}", 'element'
+                        span ' | '
+                        a href:'#top', 'top'
+                        span ')'
                     }
+                    */
+                    mkp.yieldUnescaped """
+                        <p class='backtotop'>Back to (<a href="#top.${type.name}">element</a> | <a href="#top">top</a>)</p>
+                    """
                 }
             }
+        }
+        div(class:'footer') {
+            def year = Calendar.getInstance().get(Calendar.YEAR)
+            mkp.yieldUnescaped "<p>Copyright &copy ${year} The Language Application Grid. All rights reserved.</p>"
         }
     }
 }

@@ -1,5 +1,6 @@
 VERSION=$(shell cat VERSION)
-JAR=target/discriminator-dsl-$(VERSION).jar
+JAR=discriminator-dsl-$(VERSION).jar
+TARGET_JAR=target/$(JAR)
 SERVER=/home/www/anc/LAPPS/vocab
 CONFIG=src/main/resources/discriminators.config
 PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
@@ -9,6 +10,7 @@ TYPES=target/DataTypes.txt
 HTML=target/discriminators.html
 SITE=target/vocab
 ZIP=ns.zip
+SCRIPT=$(HOME)/bin/d
 
 help:
 	@echo
@@ -32,19 +34,26 @@ jar:
 	mvn package
 	
 html:
-	java -jar $(JAR) -h $(HTML) $(CONFIG)
+	java -jar $(TARGET_JAR) -h $(HTML) $(CONFIG)
+	
+install:
+	cp $(TARGET_JAR) $(HOME)/bin
+	echo "#!/bin/bash" > $(SCRIPT)
+	/bin/echo -n "java -jar $(HOME)/bin/$(JAR) " >> $(SCRIPT)
+	/bin/echo -n $$ >> $(SCRIPT)
+	/bin/echo "@" >> $(SCRIPT)
 	
 java:
-	java -jar $(JAR) -j $(CONFIG)
+	java -jar $(TARGET_JAR) -j $(CONFIG)
 	
 types:
-	java -jar $(JAR) -d $(TYPES) $(CONFIG)
+	java -jar $(TARGET_JAR) -d $(TYPES) $(CONFIG)
 	
 zip:
 	pushd $(SITE) > /dev/null ; zip -r $(ZIP) ns ; popd > /dev/null
 
 site:
-	java -jar $(JAR) -p $(SITE) $(CONFIG)
+	java -jar $(TARGET_JAR) -p $(SITE) $(CONFIG)
 	pushd $(SITE) > /dev/null ; zip -r $(ZIP) ns ; popd > /dev/null
 	#zip -r $(ZIP) $(SITE)/ns
 		
@@ -54,7 +63,10 @@ upload:
 
 css:
 	cp src/main/resources/*.css target
-
+	
+remote:
+	anc-put src/main/resources/discriminators.css /home/www/anc/LAPPS/vocab
+	
 copy:
 	cp $(TYPES) $(RESOURCES)
 	cp target/Constants.java $(JAVA)

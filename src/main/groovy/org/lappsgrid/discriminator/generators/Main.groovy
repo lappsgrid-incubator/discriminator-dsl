@@ -24,7 +24,13 @@ class Main {
         return dsl
     }
 
-    void generatePages(String filename, String outputPath) {
+    void generatePages(String filename, String outputPath, String templatePath) {
+        File templateFile = new File(templatePath)
+        if (!templateFile.exists()) {
+            println "Template file not found."
+            return
+        }
+
         Map<String, Page> pages = [:]
         DiscriminatorDsl dsl = run(filename)
         if (dsl == null) {
@@ -60,8 +66,8 @@ class Main {
             }
         }
         println "There are ${pages.size()} pages."
-        URL templateUrl = loader.getResource('pages.markup')
-        TemplateEngine engine = new MarkupBuilderTemplateEngine(templateUrl)
+//        URL templateUrl = loader.getResource('pages.markup')
+        TemplateEngine engine = new MarkupBuilderTemplateEngine(templateFile.text)
         pages.each { String Path, Page page ->
             File file = new File(root, "${page.path}.html")
             File directory = file.parentFile
@@ -76,14 +82,19 @@ class Main {
         }
     }
 
-    void generateHtml(String filename, String outputPath) {
+    void generateHtml(String filename, String outputPath, String templatePath) {
 
         DiscriminatorDsl dsl = run(filename)
         if (dsl == null) {
             return
         }
-        URL templateUrl = loader.getResource('template.markup')
-        TemplateEngine engine = new MarkupBuilderTemplateEngine(templateUrl)
+        File templateFile = new File(templatePath)
+        if (!templateFile.exists()) {
+            println "Template file not found."
+            return
+        }
+//        URL templateUrl = loader.getResource('template.markup')
+        TemplateEngine engine = new MarkupBuilderTemplateEngine(templateFile.text)
         String html = engine.generate([bindings:dsl.bindings, discriminators:dsl.discriminators])
         File file = new File(outputPath)
         file.text = html
@@ -188,15 +199,16 @@ public class ${className}
         cli.h(longOpt:'html', args:1, required:false, 'generate html documentation')
         cli.p(longOpt:'pages', args:1, required: false, 'generate vocab site')
         cli.j(longOpt:'java', required: false, 'generates the Constants.java class')
+        cli.t(longOpt:'template', args:1, required: false, 'the template used to generate html')
         cli.'?'(longOpt:'help', required:false, 'this help message')
         cli.v(longOpt: 'version', required: false, 'display the current version number')
 
         def params = cli.parse(args)
-        if (!params) {
-            return
-        }
         if (params['?']) {
             cli.usage()
+            return
+        }
+        if (!params) {
             return
         }
         if (params.v) {
@@ -225,13 +237,23 @@ Copyright 2014 American National Corpus
             ++actions
         }
         if (params.h) {
-            app.generateHtml(filename, params.h)
-            ++actions
+            if (params.t) {
+                app.generateHtml(filename, params.h, params.t)
+                ++actions
+            }
+            else {
+                println "No template file specified."
+            }
         }
         if (params.p) {
-            println "Generating vocab web site."
-            app.generatePages(filename, params.p)
-            ++actions
+            if (params.t) {
+                println "Generating vocab web site."
+                app.generatePages(filename, params.p, params.t)
+                ++actions
+            }
+            else {
+                println "No template file specified."
+            }
         }
         if (params.j) {
             println "Generating Constants.java"
