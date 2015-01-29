@@ -1,22 +1,127 @@
 /*
- * This is a Groovy MarkupBuilder DSL file.  See the MarkupBuilder
- *  documentation for more details.
+ * This template is used to generate the discriminators.html file for the
+ * LAPPS vocabulary web site.
  */
 
- html {
+html {
     head {
-        title "LAPPS Discriminators"
-        link rel:'stylesheet', type:'text/css', href:'style.css'
+        title "LAPPS Discriminators URI"
+        link rel:'stylesheet', type:'text/css', href:'http://vocab.lappsgrid.org/discriminators.css'
     }
+    body {
+        div(id:'container') {
+            div(id:'intro') {
+                div(id:'pageHeader') {
+                    h1 'LAPPS Web Service URI Inventory'
+                    h2 '(aka Discriminators)'
+                }
+            }
+            div(id:'mainContent') {
+                p """The LAPPS Web Service URI Inventory is a list of the URI
+                    recognized by the core LAPPS infrastructure. Web services deployed to a
+                    LAPPS node may use other URI, but this list of the URI used by
+                    the LAPPS infrastructure.
+                """
+                p """The URI fall into one of three conceptual categories"""
+                ol {
+                    li """URI from the LAPPS Web Service Exchange Vocabulary.
+                        These are the URI used as annotations types by LAPPS
+                        web services.  For example, http://vocab.lappsgrid.org/Token.
+                    """
+                    li """URI used in the LIF (LAPPS Interchange Format). This is
+                        the JSON-LD format exchanges by LAPPS web services.
+                    """
+                    li """URI used as commands and return codes used by LAPPS web services.
+                    """
+                }
+                a(name:'top', '')
+                table {
+                    tr {
+                        th 'ID'
+                        th 'Short name'
+                        th 'URI / Media-Type'
+                    }
+                    discriminators.each { type ->
+                        tr {
+                            td type.id
+                            td {
+                                a(name:"top.${type.name}")
+                                a(href:"#${type.name}", type.name)
+                            }
+                            td {
+                                if (type.uri.startsWith('http://vocab.lappsgrid.org')) {
+                                    a href:type.uri, type.uri
+                                }
+                                else {
+                                    span type.uri
+                                }
+                            }
+                        }
+                    }
+                }
+                h1 'Descriptions'
+                p 'These descriptions need work...'
+                discriminators.each { type ->
+                    a(name:type.name, '')
+                    h2 type.name
+                    table(class:'definition-table') {
+                        tr {
+                            th width:'10%', "ID"
+                            td type.id
+                        }
+                        tr {
+                            th "URI"
+                            if (type.uri.startsWith('http://vocab.lappsgrid.org')) {
+                                td {
+                                    a href:type.uri, type.uri
+                                }
+                            }
+                            else {
+                                td type.uri
+                            }
+                        }
+                        if (type.ancestors.size() > 0) {
+                            th 'Ancestors'
+                            td {
+                                def makeLink = { name ->
+                                    builder.a(href:"#${name}", name)
+                                }
+                                type.ancestors.collect { makeLink(it) }.join(", ")
+                            }
+                        }
+                        tr {
+                            td()
+                            td type.description
+                        }
+                    }
+                    /*
+                    p(class:'backtotop') {
+                        span 'Back to ('
+                        a href:"#top.${type.name}", 'element'
+                        span ' | '
+                        a href:'#top', 'top'
+                        span ')'
+                    }
+                    */
+                    mkp.yieldUnescaped """
+                        <p class='backtotop'>Back to (<a href="#top.${type.name}">element</a> | <a href="#top">top</a>)</p>
+                    """
+                }
+            }
+        }
+        div(class:'footer') {
+            def year = Calendar.getInstance().get(Calendar.YEAR)
+            mkp.yieldUnescaped "<p>Copyright &copy ${year} The Language Application Grid. All rights reserved.</p>"
+        }
+    }
+}
+    /*
     body(id:'container') {
         div(id:'main') {
             h1 "LAPPS Discriminators"
             discriminators.each { type ->
                 h2 type.name
                 table {
-//                    tr {
-//                        td(class:'left', type.name)
-//                    }
                     tr {
                         th "ID"
                         td type.id
@@ -41,3 +146,4 @@
         }
     }
 }
+*/

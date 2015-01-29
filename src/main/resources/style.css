@@ -1,0 +1,89 @@
+body
+{
+width: 90%;
+text-align: left;
+margin-left: 10em;
+margin-right: 20em;
+margin-top:5em;
+background: #fff;
+color: #3A4956;
+font-size: 75%;
+font-family: "Lucida Grande" , "Lucida Sans Unicode" , Verdana, Tahoma, Arial, sans-serif;
+line-height: 160%;
+}
+
+#main
+{
+padding-right: 50px; 
+padding-bottom: 5px;
+border-bottom: solid 1px #CCCCCC;
+text-align: left;
+}
+
+.left {
+	align: left;
+	color: #FF0000;	
+	font-size: 120%;
+	font-weight: bold;
+}
+
+.note {
+	color: red;
+}
+
+.back {
+	font-size: 10pt;
+	text-align:right;
+	margin-right: 15em;
+}
+
+h1 {
+	font-size: 20pt;
+	font-weight: bolder;
+}
+
+h2 { 
+	font-size: 18pt;
+	color: #FF0000; 
+	font-weight: bold;
+	padding-bottom: 2px;	
+}
+
+div.ancestors {
+	padding-left: 2em;
+	font-size: 11pt;
+}
+
+h3 {
+	font-size: 14pt;
+}
+
+p {
+	font-size: 11pt;
+}
+
+table, th, td {
+	border: solid 1px #CCCCCC;
+}
+
+th, td {
+	padding-left: 5pt;
+}
+
+table {
+	padding-left: 1em;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border-collapse: collapse;
+	width: 80%;
+}
+
+th {
+	align: left;
+	text-align: left;
+}
+
+code
+{
+	font-family: Courier, monospace;
+}

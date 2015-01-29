@@ -77,6 +77,7 @@ class DiscriminatorDsl {
         } else {
             script.binding.setVariable("args", [:])
         }
+        script.binding.setVariable("bank", { it -> BankDelegate.BANK_SIZE * it })
 
         script.metaClass = getMetaClass(script.class, shell)
         //try {
@@ -145,6 +146,12 @@ class DiscriminatorDsl {
         meta.offset = { offset, Closure cl ->
 //            println "Staring block at offest $offset"
             cl.delegate = new OffsetDelegate(offset, bindings, discriminators)
+            cl.resolveStrategy = Closure.DELEGATE_FIRST
+            cl()
+        }
+
+        meta.bank = { bankNumber, Closure cl ->
+            cl.delegate = new BankDelegate(bankNumber, bindings, discriminators)
             cl.resolveStrategy = Closure.DELEGATE_FIRST
             cl()
         }
