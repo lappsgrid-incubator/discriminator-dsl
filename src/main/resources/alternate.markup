@@ -1,6 +1,7 @@
 /*
- * This is a Groovy MarkupBuilder DSL file.  See the MarkupBuilder
- * documentation for more details.
+ * This template is not used.
+ *
+ * It was used to generate a version of the discriminators.html file.
  */
 
  html {

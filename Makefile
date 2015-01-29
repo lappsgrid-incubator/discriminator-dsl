@@ -11,6 +11,8 @@ HTML=target/discriminators.html
 SITE=target/vocab
 ZIP=ns.zip
 SCRIPT=$(HOME)/bin/d
+DISCRIMINATOR_TEMPLATE=src/main/resources/template.markup
+PAGE_TEMPLATE=src/main/resources/pages.markup
 
 help:
 	@echo
@@ -21,6 +23,7 @@ help:
 	@echo "install : copies jar and start script to $(HOME)/bin" 
 	@echo "   java : generates the Constants.java file."
 	@echo "   html : generates HTML documentation for the discriminators."
+	@echo "  pages : generates indivdual html pages for each discriminator." 
 	@echo "  types : generates the DataTypes.txt file for the discriminators."
 	@echo "   site : generates vocabulary website."
 	@echo "    zip : creates a zip archive of the vocab website."
@@ -39,8 +42,11 @@ jar:
 	mvn package
 	
 html:
-	java -jar $(TARGET_JAR) -h $(HTML) $(CONFIG)
+	java -jar $(TARGET_JAR) -h $(HTML) -t $(DISCRIMINATOR_TEMPLATE) $(CONFIG)
 	
+pages:
+	java -jar $(TARGET_JAR) -p $(SITE) -t $(PAGE_TEMPLATE) $(CONFIG)
+
 install:
 	cp $(TARGET_JAR) $(HOME)/bin
 	echo "#!/bin/bash" > $(SCRIPT)
@@ -57,8 +63,7 @@ types:
 zip:
 	pushd $(SITE) > /dev/null ; zip -r $(ZIP) ns ; popd > /dev/null
 
-site:
-	java -jar $(TARGET_JAR) -p $(SITE) $(CONFIG)
+site: pages
 	pushd $(SITE) > /dev/null ; zip -r $(ZIP) ns ; popd > /dev/null
 	#zip -r $(ZIP) $(SITE)/ns
 		
