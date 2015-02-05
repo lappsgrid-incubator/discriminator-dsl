@@ -80,7 +80,7 @@ remote:
 	
 copy:
 	cp $(TYPES) $(RESOURCES)
-	cp target/Constants.java $(JAVA)
+	cp target/Discriminators.java $(JAVA)
 
 docs: html types site zip upload copy
 
