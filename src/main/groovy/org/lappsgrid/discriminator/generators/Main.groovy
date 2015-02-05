@@ -135,7 +135,7 @@ class Main {
     }
 
     void generateJavaClass(String config) {
-        generateJavaClass(config, "org.lappsgrid.discriminator", "Constants")
+        generateJavaClass(config, "org.lappsgrid.discriminator", "Discriminators")
     }
 
     void generateJavaClass(String config, String packageName, String className) {
@@ -256,7 +256,7 @@ Copyright 2014 American National Corpus
             }
         }
         if (params.j) {
-            println "Generating Constants.java"
+            println "Generating Discriminators.java"
             app.generateJavaClass(filename)
             ++actions
         }
