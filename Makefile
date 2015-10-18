@@ -1,9 +1,10 @@
 VERSION=$(shell cat VERSION)
+PROJECT=$(shell pwd)
 JAR=discriminator-dsl-$(VERSION).jar
 TARGET_JAR=target/$(JAR)
 SERVER=/home/www/anc/LAPPS/vocab
 CONFIG=src/main/resources/discriminators.config
-PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
+#PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
 RESOURCES=$(PROJECT)/src/main/resources
 JAVA=$(PROJECT)/src/main/java/org/lappsgrid/discriminator
 TYPES=target/DataTypes.txt
