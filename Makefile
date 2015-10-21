@@ -1,11 +1,11 @@
 VERSION=$(shell cat VERSION)
-PROJECT=$(shell pwd)
+#PROJECT=$(shell pwd)
 JAR=discriminator-dsl-$(VERSION).jar
 TARGET_JAR=target/$(JAR)
 DIST=target/dist
-SERVER=/home/www/anc/LAPPS/vocab/test
+SERVER=/home/www/anc/LAPPS/vocab
 CONFIG=src/main/resources/discriminators.config
-#PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
+PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
 RESOURCES=$(PROJECT)/src/main/resources
 JAVA=$(PROJECT)/src/main/java/org/lappsgrid/discriminator
 TYPES=target/DataTypes.txt
@@ -23,14 +23,14 @@ help:
 	@echo "  clean : removed artifacts from previous builds"
 	@echo "    jar : generates an executable jar file."
 	@echo "install : copies jar and start script to $(HOME)/bin" 
-	@echo "   java : generates the Constants.java file."
+	@echo "   java : generates the Discriminators.java file."
 	@echo "   html : generates HTML documentation for the discriminators."
 	@echo "  pages : generates indivdual html pages for each discriminator." 
 	@echo "  types : generates the DataTypes.txt file for the discriminators."
 	@echo "   site : generates vocabulary website."
 	@echo "    zip : creates a zip archive of the vocab website."
 	@echo " upload : uploads the discriminators.html file to the server."
-	@echo "   copy : copies the Constants.java and DataTypes.txt file to the Discriminators project."
+	@echo "   copy : copies the Discriminators.java and DataTypes.txt file to the Discriminators project."
 	@echo "   docs : generates all documentation (html, types, site) and uploads/copies"
 	@echo "    css : copies css files to target directory for testing."
 	@echo " remote : copies the discriminators.css file to the server."
