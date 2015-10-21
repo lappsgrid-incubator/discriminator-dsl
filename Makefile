@@ -2,7 +2,8 @@ VERSION=$(shell cat VERSION)
 PROJECT=$(shell pwd)
 JAR=discriminator-dsl-$(VERSION).jar
 TARGET_JAR=target/$(JAR)
-SERVER=/home/www/anc/LAPPS/vocab
+DIST=target/dist
+SERVER=/home/www/anc/LAPPS/vocab/test
 CONFIG=src/main/resources/discriminators.config
 #PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
 RESOURCES=$(PROJECT)/src/main/resources
@@ -83,6 +84,14 @@ copy:
 	cp $(TYPES) $(RESOURCES)
 	cp target/Discriminators.java $(JAVA)
 
+package:
+	if [ ! -e $(DIST) ] ; then mkdir -p $(DIST) ; fi
+	cp $(DISCRIMINATOR_TEMPLATE) $(DIST)
+	cp $(PAGES_TEMPLATE)  $(DIST)
+	cp $(CONFIG) $(DIST)
+	cp src/main/resources/*.css $(DIST)
+	cp $(TARGET_JAR) $(DIST)
+	
 docs: html types site zip upload copy
 
 oldall: clean jar html types site zip upload copy
