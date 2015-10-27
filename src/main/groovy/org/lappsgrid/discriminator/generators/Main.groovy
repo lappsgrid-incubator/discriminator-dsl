@@ -151,6 +151,8 @@ class Main {
  *
  * This file is machine generated and any changes are likely to be overwritten
  * by future updates.
+ *
+ * Copyright 2015 The Language Application Grid.
  */
 
 package ${packageName};
@@ -165,6 +167,16 @@ public class ${className}
             dsl.discriminators.each { DiscriminatorDelegate delegate ->
                 String name = delegate.name.replaceAll("-", "_").toUpperCase()
                 out.println "       public static final long ${name} = ${delegate.id};";
+            }
+            out.println """
+    }
+
+    public static class Alias
+    {
+"""
+            dsl.discriminators.each { DiscriminatorDelegate delegate ->
+                String name = delegate.name.replaceAll("-", "_").toUpperCase()
+                out.println "       public static final String ${name} = \"${delegate.name}\";";
             }
             out.println """
     }
@@ -214,7 +226,7 @@ public class ${className}
         if (params.v) {
            println """
 LAPPS Discriminator Documentation Generator v${Version.version}
-Copyright 2014 American National Corpus
+Copyright 2015 The Language Application Grid.
 
 """
            return
