@@ -73,6 +73,9 @@ upload:
 	anc-put $(HTML) $(SERVER)
 	if [ -e $(SITE)/$(ZIP) ] ; then anc-put $(SITE)/$(ZIP) $(SERVER) ; fi
 	anc-put src/main/resources/discriminators.css $(SERVER)
+	
+unzip:
+	ssh -p 22022 suderman@anc.org "cd $(SERVER) && unzip -o $(ZIP)"
 
 css:
 	cp src/main/resources/*.css target
