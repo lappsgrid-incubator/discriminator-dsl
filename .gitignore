@@ -6,3 +6,4 @@ pom.xml.next
 release.properties
 *.iml
 VERSION
+src/main/java/org/lappsgrid/discriminator/dsl/Version.java

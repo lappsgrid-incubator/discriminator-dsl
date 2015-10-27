@@ -1,6 +1,8 @@
 VERSION=$(shell cat VERSION)
+#PROJECT=$(shell pwd)
 JAR=discriminator-dsl-$(VERSION).jar
 TARGET_JAR=target/$(JAR)
+DIST=target/dist
 SERVER=/home/www/anc/LAPPS/vocab
 CONFIG=src/main/resources/discriminators.config
 PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
@@ -21,14 +23,14 @@ help:
 	@echo "  clean : removed artifacts from previous builds"
 	@echo "    jar : generates an executable jar file."
 	@echo "install : copies jar and start script to $(HOME)/bin" 
-	@echo "   java : generates the Constants.java file."
+	@echo "   java : generates the Discriminators.java file."
 	@echo "   html : generates HTML documentation for the discriminators."
 	@echo "  pages : generates indivdual html pages for each discriminator." 
 	@echo "  types : generates the DataTypes.txt file for the discriminators."
 	@echo "   site : generates vocabulary website."
 	@echo "    zip : creates a zip archive of the vocab website."
 	@echo " upload : uploads the discriminators.html file to the server."
-	@echo "   copy : copies the Constants.java and DataTypes.txt file to the Discriminators project."
+	@echo "   copy : copies the Discriminators.java and DataTypes.txt file to the Discriminators project."
 	@echo "   docs : generates all documentation (html, types, site) and uploads/copies"
 	@echo "    css : copies css files to target directory for testing."
 	@echo " remote : copies the discriminators.css file to the server."
@@ -71,6 +73,9 @@ upload:
 	anc-put $(HTML) $(SERVER)
 	if [ -e $(SITE)/$(ZIP) ] ; then anc-put $(SITE)/$(ZIP) $(SERVER) ; fi
 	anc-put src/main/resources/discriminators.css $(SERVER)
+	
+unzip:
+	ssh -p 22022 suderman@anc.org "cd $(SERVER) && unzip -o $(ZIP)"
 
 css:
 	cp src/main/resources/*.css target
@@ -80,8 +85,16 @@ remote:
 	
 copy:
 	cp $(TYPES) $(RESOURCES)
-	cp target/Constants.java $(JAVA)
+	cp target/Discriminators.java $(JAVA)
 
+package:
+	if [ ! -e $(DIST) ] ; then mkdir -p $(DIST) ; fi
+	cp $(DISCRIMINATOR_TEMPLATE) $(DIST)
+	cp $(PAGES_TEMPLATE)  $(DIST)
+	cp $(CONFIG) $(DIST)
+	cp src/main/resources/*.css $(DIST)
+	cp $(TARGET_JAR) $(DIST)
+	
 docs: html types site zip upload copy
 
 oldall: clean jar html types site zip upload copy
