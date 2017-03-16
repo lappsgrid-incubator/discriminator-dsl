@@ -5,7 +5,8 @@ org.lappsgrid.discriminator.dsl
 
 | Branch | Status |
 |:-------|--------|
-|master|[![Build Status](https://travis-ci.org/oanc/org.lappsgrid.discriminator.dsl.svg?branch=master)](https://travis-ci.org/oanc/org.lappsgrid.discriminator.dsl)|
-|develop|[![Build Status](https://travis-ci.org/oanc/org.lappsgrid.discriminator.dsl.svg?branch=develop)](https://travis-ci.org/oanc/org.lappsgrid.discriminator.dsl)|
+
+|master|[![Build Status](http://grid.anc.org:9080/travis/svg/lappsgrid-incubator/org.lappsgrid.discriminator.dsl?branch=master)](https://travis-ci.org/oanc/org.lappsgrid.discriminator.dsl)|
+|develop|[![Build Status](http://grid.anc.org:9080/travis/svg/lappsgrid-incubator/org.lappsgrid.discriminator.dsl)](https://travis-ci.org/oanc/org.lappsgrid.discriminator.dsl)|
 
 DSL used to describe everything related to LAPPS discriminators.
