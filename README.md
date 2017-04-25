@@ -3,6 +3,9 @@ org.lappsgrid.discriminator.dsl
 
 ### Build Status
 
+[![Build Status](http://grid.anc.org:9080/travis/svg/lappsgrid-incubator/org.lappsgrid.discriminator.dsl?branch=master)](https://travis-ci.org/lappsgrid-incubator/org.lappsgrid.discriminator.dsl)
+[![Build Status](http://grid.anc.org:9080/travis/svg/lappsgrid-incubator/org.lappsgrid.discriminator.dsl?branch=develop)](https://travis-ci.org/lappsgrid-incubator/org.lappsgrid.discriminator.dsl)
+
 | Branch | Status |
 |:-------|--------|
 |master|[![Build Status](http://grid.anc.org:9080/travis/svg/lappsgrid-incubator/org.lappsgrid.discriminator.dsl?branch=master)](https://travis-ci.org/lappsgrid-incubator/org.lappsgrid.discriminator.dsl)|
