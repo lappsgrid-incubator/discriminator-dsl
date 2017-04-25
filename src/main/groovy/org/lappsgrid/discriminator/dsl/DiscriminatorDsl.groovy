@@ -13,6 +13,7 @@ class DiscriminatorDsl {
     File parentDir
     Binding bindings
     List discriminators
+    int offset = 0
 //    TemplateEngine engine
 
     public DiscriminatorDsl() {
@@ -154,6 +155,24 @@ class DiscriminatorDsl {
             cl.delegate = new BankDelegate(bankNumber, bindings, discriminators)
             cl.resolveStrategy = Closure.DELEGATE_FIRST
             cl()
+        }
+
+        meta.methodMissing = { String name, args ->
+            if (args.size() == 0) {
+                throw new Exception("Type definitions require a Closure initializer: ${name}.")
+            }
+            if (!(args[0] instanceof Closure)) {
+                throw new Exception("Type definitions require a Closure initializer: ${name}.")
+            }
+
+            Closure cl = (Closure) args[0]
+            cl.delegate = new DiscriminatorDelegate(offset)
+            cl.delegate.name = name
+            cl.resolveStrategy = Closure.DELEGATE_FIRST
+            cl()
+            ++offset
+            binding.setVariable(name, name)
+            discriminators << cl.delegate
         }
 
         meta.initialize()

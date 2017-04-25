@@ -205,7 +205,7 @@ public class ${className}
     static void main(args) {
 //        new Main().generateDataTypes()
         CliBuilder cli = new CliBuilder()
-        cli.usage = "java -jar Generator-${Version.version}.jar [-d <filename>] [-h <filename>] [-?] -o <path>"
+        cli.usage = "java -jar discriminator-${Version.version}.jar [-d <filename>] [-h <filename>] [-?] -o <path>"
         cli.header = "Generates documentation for the LAPPS discriminator URI."
         cli.d(longOpt:'datatypes', args:1, required:false, 'generate the DataTypes.txt file')
         cli.h(longOpt:'html', args:1, required:false, 'generate html documentation')
@@ -216,11 +216,8 @@ public class ${className}
         cli.v(longOpt: 'version', required: false, 'display the current version number')
 
         def params = cli.parse(args)
-        if (params['?']) {
+        if (!params || params['?']) {
             cli.usage()
-            return
-        }
-        if (!params) {
             return
         }
         if (params.v) {
@@ -233,7 +230,8 @@ Copyright 2015 The Language Application Grid.
         }
         List<String> fileNames = params.arguments()
         if (fileNames.size() == 0) {
-            println 'No discriminator configuration file provided.'
+            //println 'No discriminator configuration file provided.'
+            cli.usage()
             return
         }
         if (fileNames.size() > 1) {
