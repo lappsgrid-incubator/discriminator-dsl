@@ -57,7 +57,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <finalName>discriminator-dsl-${project.version}</finalName>
+                    <finalName>discriminator-${project.version}</finalName>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
