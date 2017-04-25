@@ -28,14 +28,15 @@ class DslTest {
         println "DslTest.helloWorld"
         compile "println 'Hello world.'"
     }
-    @Test
+
+    @Ignore
     void offsetTest1() {
         println "DslTest.offsetTest1"
         compile """
 offset(0) {}
 """
     }
-    @Test
+    @Ignore
     void offsetTest2() {
         println "DslTest.offsetTest2"
         compile """
@@ -49,19 +50,17 @@ offset(0) {
     void errorTest() {
         println "DslTest.errorTest"
         compile """
-offset(0) {
     error {
         uri 'http://ns.lappsgrid.org/1.0/error'
         description 'Base type for all errors returned by LAPPS services.'
     }
-}
 """
         assertTrue dsl.discriminators.size() == 1
         DiscriminatorDelegate discriminator = dsl.discriminators[0]
         discriminator.uri == 'http://ns.lappsgrid.org/1.0/error'
     }
 
-    @Test
+    @Ignore
     void testInheritance() {
         println "DslTest.testInheritance"
         compile """
@@ -77,7 +76,7 @@ offset(0) {
 """
     }
 
-    @Test
+    @Ignore
     void deeperInheritance() {
         compile """
 offset(0) {
