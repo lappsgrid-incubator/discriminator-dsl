@@ -164,7 +164,7 @@ class DiscriminatorDsl {
             if (!(args[0] instanceof Closure)) {
                 throw new Exception("Type definitions require a Closure initializer: ${name}.")
             }
-
+            print "Staring $name"
             Closure cl = (Closure) args[0]
             cl.delegate = new DiscriminatorDelegate(offset)
             cl.delegate.name = name
@@ -173,6 +173,7 @@ class DiscriminatorDsl {
             ++offset
             binding.setVariable(name, name)
             discriminators << cl.delegate
+            println " [valid]."
         }
 
         meta.initialize()

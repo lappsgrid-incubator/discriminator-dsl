@@ -26,13 +26,14 @@ class DslTest {
     @Test
     void helloWorld() {
         println "DslTest.helloWorld"
-        compile "println 'Hello world.'"
+        compile "version='1.0.0';println 'Hello world.'"
     }
 
     @Ignore
     void offsetTest1() {
         println "DslTest.offsetTest1"
         compile """
+version='1.0.0'
 offset(0) {}
 """
     }
@@ -50,6 +51,7 @@ offset(0) {
     void errorTest() {
         println "DslTest.errorTest"
         compile """
+    version='1.0.0'
     error {
         uri 'http://ns.lappsgrid.org/1.0/error'
         description 'Base type for all errors returned by LAPPS services.'
@@ -64,6 +66,7 @@ offset(0) {
     void testInheritance() {
         println "DslTest.testInheritance"
         compile """
+version='1.0.0'
 offset(0) {
     parent {
         uri "http://vocab.lappsgrid.org/parent"
@@ -98,6 +101,7 @@ offset(0) {
     @Test
     void testHyphens() {
         compile """
+version='1.0.0'
 offset(0) {
     text {
         uri 'http://text'

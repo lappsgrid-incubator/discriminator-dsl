@@ -77,7 +77,12 @@ class Main {
                 }
             }
             println "Generating page ${file.path}"
-            file.text = engine.generate(page:page)
+            Binding binding = dsl.bindings
+            String version = '1.0.0'
+            if (binding.hasVariable('version')) {
+                version = binding.getVariable('version')
+            }
+            file.text = engine.generate(page:page, binding:dsl.bindings, version:version)
 //            page.each { Page.Info info -> println "${info.discriminator.name} ${info.uri}"}
         }
     }
@@ -95,7 +100,12 @@ class Main {
         }
 //        URL templateUrl = loader.getResource('template.markup')
         TemplateEngine engine = new MarkupBuilderTemplateEngine(templateFile.text)
-        String html = engine.generate([bindings:dsl.bindings, discriminators:dsl.discriminators])
+        Binding binding = dsl.bindings
+        String version = '1.0.0'
+        if (binding.hasVariable('version')) {
+            version = binding.getVariable('version')
+        }
+        String html = engine.generate([version: version, bindings:dsl.bindings, discriminators:dsl.discriminators])
         File file = new File(outputPath)
         file.text = html
         println "Wrote ${file.path}"
@@ -161,6 +171,10 @@ public class ${className}
 {
     private ${className}() { }
 
+    /**
+     * @deprecated These are no longer reliable. Use an Alias or Uri instead.
+     */
+    @Deprecated
     public static class Values
     {
 """
