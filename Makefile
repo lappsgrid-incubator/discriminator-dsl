@@ -35,7 +35,7 @@ install:
 	cp $(TARGET_JAR) $(HOME)/bin
 	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > $(SCRIPT)
 	if [ -d ../vocab/bin ]; then cp $(TARGET_JAR) ../vocab/bin; fi
-	if [ -d ../vocab/bin ]; then cp $(SCRIPT) ../vocab/bin; if
+	if [ -d ../vocab/bin ]; then cp $(SCRIPT) ../vocab/bin; fi
 
 release:
 	if [ -e dist ] ; rm -rf dist ; fi
