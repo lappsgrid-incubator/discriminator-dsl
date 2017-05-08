@@ -1,20 +1,7 @@
 VERSION=$(shell cat VERSION)
-#PROJECT=$(shell pwd)
 JAR=discriminator-$(VERSION).jar
 TARGET_JAR=target/$(JAR)
-DIST=target/dist
-SERVER=/home/www/anc/LAPPS/vocab
-CONFIG=src/main/resources/discriminators.config
-PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
-RESOURCES=$(PROJECT)/src/main/resources
-JAVA=$(PROJECT)/src/main/java/org/lappsgrid/discriminator
-TYPES=target/DataTypes.txt
-HTML=target/discriminators.html
-SITE=target/vocab
-ZIP=ns.zip
 SCRIPT=$(HOME)/bin/ddsl
-DISCRIMINATOR_TEMPLATE=src/main/resources/template.markup
-PAGE_TEMPLATE=src/main/resources/pages.markup
 
 help:
 	@echo
