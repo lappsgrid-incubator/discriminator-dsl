@@ -1,4 +1,4 @@
-org.lappsgrid.discriminator.dsl
+LAPPS Discriminator DSL
 ===============================
 
 
