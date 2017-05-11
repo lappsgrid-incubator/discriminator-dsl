@@ -25,11 +25,11 @@ install:
 	cp $(SCRIPT) ../vocab/bin
 
 release:
-	if [ -e dist ] ; rm -rf dist ; fi
+	if [ -e dist ] ; then rm -rf dist ; fi
 	mkdir dist
 	cp $(TARGET_JAR) dist	
 	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > dist/ddsl
-	cd dist ; tar czf ddsl $(JAR) discriminators-$(VERSION).tgz
+	cd dist ; tar czf discriminators-$(VERSION).tgz ddsl $(JAR)
 	anc-put dist/discriminators-$(VERSION).tgz /home/www/anc/downloads
 	anc-put dist/discriminators-$(VERSION).tgz /home/www/anc/downloads/discriminators-latest.tgz
 	

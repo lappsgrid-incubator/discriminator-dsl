@@ -40,7 +40,7 @@ class Main {
         dsl.discriminators.each { DiscriminatorDelegate discriminator ->
 //            println discriminator.name
             String uri = discriminator.uri.replace("http://vocab.lappsgrid.org/", '')
-            if (uri.startsWith('ns')) {
+            if (uri.startsWith('ns') || uri.contains('/ns/')) {
                 String path = uri
                 String fragment = null
                 int hash = uri.indexOf('#')
