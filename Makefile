@@ -1,20 +1,9 @@
 VERSION=$(shell cat VERSION)
-#PROJECT=$(shell pwd)
 JAR=discriminator-$(VERSION).jar
 TARGET_JAR=target/$(JAR)
 DIST=target/dist
-SERVER=/home/www/anc/LAPPS/vocab
-CONFIG=src/main/resources/discriminators.config
-PROJECT=/Users/suderman/Workspaces/IntelliJ/Lappsgrid/org.lappsgrid.discriminator
-RESOURCES=$(PROJECT)/src/main/resources
-JAVA=$(PROJECT)/src/main/java/org/lappsgrid/discriminator
-TYPES=target/DataTypes.txt
-HTML=target/discriminators.html
-SITE=target/vocab
-ZIP=ns.zip
 SCRIPT=$(HOME)/bin/ddsl
-DISCRIMINATOR_TEMPLATE=src/main/resources/template.markup
-PAGE_TEMPLATE=src/main/resources/pages.markup
+
 
 help:
 	@echo
@@ -38,12 +27,14 @@ install:
 	if [ -d ../vocab/bin ]; then cp $(SCRIPT) ../vocab/bin; fi
 
 release:
-	if [ -e dist ] ; rm -rf dist ; fi
-	mkdir dist
-	cp $(TARGET_JAR) dist	
-	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > dist/ddsl
-	cd dist ; tar czf ddsl $(JAR) discriminators-$(VERSION).tgz
-	anc-put dist/discriminators-$(VERSION).tgz /home/www/anc/downloads
-	anc-put dist/discriminators-$(VERSION).tgz /home/www/anc/downloads/discriminators-latest.tgz
+	if [ -e $(DIST) ] ; then rm -rf $(DIST) ; fi
+	mkdir $(DIST)
+	cp $(TARGET_JAR) $(DIST)
+	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > $(DIST)/ddsl
+	cd $(DIST) ; tar czf discriminator-$(VERSION).tgz ddsl $(JAR)
 
-all: clean jar install release
+upload:
+	anc-put $(DIST)/discriminators-$(VERSION).tgz /home/www/anc/downloads
+	anc-put $(DIST)/discriminators-$(VERSION).tgz /home/www/anc/downloads/discriminators-latest.tgz
+
+all: clean jar install release upload

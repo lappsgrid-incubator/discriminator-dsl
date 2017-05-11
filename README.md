@@ -16,4 +16,4 @@ $ make jar
 $ make release
 ```
 
-**WARNING**: this does not work quite yet since the Makefile is still being rewritten.
+After this, there will be an archive named `target/dist/discriminator-VERSION.tgz` and the contents of that archive need to be put in the `bin` directory of https://github.com/lapps/vocabulary-pages (again, currently only available in the 1.1.0 branch).
