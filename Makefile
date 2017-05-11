@@ -1,7 +1,9 @@
 VERSION=$(shell cat VERSION)
 JAR=discriminator-$(VERSION).jar
 TARGET_JAR=target/$(JAR)
+DIST=target/dist
 SCRIPT=$(HOME)/bin/ddsl
+
 
 help:
 	@echo
@@ -11,32 +13,28 @@ help:
 	@echo " install : installs the binary to ~/bin and the vocab project"
 	@echo " release : uploads a .tgz distribution to http://www.anc.org/downloads"
 	@echo "    help : displays this help message"
-	
+
 clean:
 	mvn clean
-	
+
 jar:
 	mvn package
-	
+
 install:
 	cp $(TARGET_JAR) $(HOME)/bin
-	cp $(TARGET_JAR) ../vocab/bin
 	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > $(SCRIPT)
-	cp $(SCRIPT) ../vocab/bin
+	if [ -d ../vocab/bin ]; then cp $(TARGET_JAR) ../vocab/bin; fi
+	if [ -d ../vocab/bin ]; then cp $(SCRIPT) ../vocab/bin; fi
 
 release:
-	if [ -e dist ] ; then rm -rf dist ; fi
-	mkdir dist
-	cp $(TARGET_JAR) dist	
-	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > dist/ddsl
-	cd dist ; tar czf discriminators-$(VERSION).tgz ddsl $(JAR)
-	anc-put dist/discriminators-$(VERSION).tgz /home/www/anc/downloads
-	anc-put dist/discriminators-$(VERSION).tgz /home/www/anc/downloads/discriminators-latest.tgz
-	
-all: clean jar install release
+	if [ -e $(DIST) ] ; then rm -rf $(DIST) ; fi
+	mkdir $(DIST)
+	cp $(TARGET_JAR) $(DIST)
+	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > $(DIST)/ddsl
+	cd $(DIST) ; tar czf discriminator-$(VERSION).tgz ddsl $(JAR)
 
+upload:
+	anc-put $(DIST)/discriminators-$(VERSION).tgz /home/www/anc/downloads
+	anc-put $(DIST)/discriminators-$(VERSION).tgz /home/www/anc/downloads/discriminators-latest.tgz
 
-
-	
-
-	
+all: clean jar install release upload
