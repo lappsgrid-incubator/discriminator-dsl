@@ -4,7 +4,6 @@ TARGET_JAR=target/$(JAR)
 DIST=target/dist
 SCRIPT=$(HOME)/bin/ddsl
 
-
 help:
 	@echo
 	@echo "GOALS"
@@ -20,11 +19,9 @@ clean:
 jar:
 	mvn package
 
-install:
+install: 
 	cp $(TARGET_JAR) $(HOME)/bin
 	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > $(SCRIPT)
-	if [ -d ../vocab/bin ]; then cp $(TARGET_JAR) ../vocab/bin; fi
-	if [ -d ../vocab/bin ]; then cp $(SCRIPT) ../vocab/bin; fi
 
 release:
 	if [ -e $(DIST) ] ; then rm -rf $(DIST) ; fi
@@ -33,8 +30,21 @@ release:
 	cat src/test/resources/ddsl | sed 's/__VERSION__/'$(VERSION)'/' > $(DIST)/ddsl
 	cd $(DIST) ; tar czf discriminator-$(VERSION).tgz ddsl $(JAR)
 
-upload:
-	anc-put $(DIST)/discriminators-$(VERSION).tgz /home/www/anc/downloads
-	anc-put $(DIST)/discriminators-$(VERSION).tgz /home/www/anc/downloads/discriminators-latest.tgz
+ifeq ($(TOKEN),)
+commit:
+	@echo
+	@echo "Please set the TOKEN variable with your GitHub API token."
+	@echo
+	@echo "If you just ran the 'make all' goal then you only need to do"
+	@echo "'make commit' after setting the TOKEN variable."
+	@echo
+else
+commit:
+	ghc -f vocabulary.commit -t $(TOKEN)
+endif
 
-all: clean jar install release upload
+upload: 
+	scp -P 22022 $(DIST)/discriminator-$(VERSION).tgz anc.org:/home/www/anc/downloads
+	scp -P 22022 $(DIST)/discriminator-$(VERSION).tgz anc.org:/home/www/anc/downloads/discriminators-latest.tgz
+
+all: clean jar install release upload commit
