@@ -1,0 +1,23 @@
+/*
+ * Specifies the files to be commited as a PR to the vocabulary-pages
+ * project on GitHub.
+ */
+
+def version = new File('VERSION').text
+
+repository = 'vocabulary-pages'
+base = 'develop'
+message = "Discriminator DSL $version"
+pr.title = 'New Discriminator DSL'
+pr.message = "Version $version of the Discriminator DSL processor is now available."
+files = [
+	[
+		file: 'target/dist/ddsl',
+		path: 'bin/ddsl'
+	],
+	[
+		file: "target/dist/discriminator-${version}.jar",
+		path: "bin/discriminator-${version}.jar",
+		binary: true
+	]
+]

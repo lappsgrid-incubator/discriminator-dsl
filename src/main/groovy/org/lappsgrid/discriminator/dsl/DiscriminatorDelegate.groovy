@@ -8,6 +8,7 @@ class DiscriminatorDelegate {
     String name
     String uri = "unassigned"
     String description = ""
+    String deprecated = ""
     List<String> ancestors = []
 
     public DiscriminatorDelegate(long id) {
@@ -20,6 +21,9 @@ class DiscriminatorDelegate {
     }
     void description(String description) {
         this.description = description
+    }
+    void deprecated(String deprecated) {
+        this;deprecated = deprecated
     }
     void parents(Object... args) {
         args.each { ancestors << it }

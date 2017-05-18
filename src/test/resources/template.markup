@@ -37,13 +37,13 @@ html {
                 a(name:'top', '')
                 table {
                     tr {
-                        th 'ID'
+                        //th 'ID'
                         th 'Short name'
                         th 'URI / Media-Type'
                     }
                     discriminators.each { type ->
                         tr {
-                            td type.id
+                            //td type.id
                             td {
                                 a(name:"top.${type.name}")
                                 a(href:"#${type.name}", type.name)
@@ -65,12 +65,12 @@ html {
                     a(name:type.name, '')
                     h2 type.name
                     table(class:'definition-table') {
+                        //tr {
+                        //    th width:'10%', "ID"
+                        //    td type.id
+                        //}
                         tr {
-                            th width:'10%', "ID"
-                            td type.id
-                        }
-                        tr {
-                            th "URI"
+                            th width:'10%', "URI"
                             if (type.uri.startsWith('http://vocab.lappsgrid.org')) {
                                 td {
                                     a href:type.uri, type.uri

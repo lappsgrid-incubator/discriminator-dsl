@@ -40,7 +40,7 @@ class Main {
         dsl.discriminators.each { DiscriminatorDelegate discriminator ->
 //            println discriminator.name
             String uri = discriminator.uri.replace("http://vocab.lappsgrid.org/", '')
-            if (uri.startsWith('ns')) {
+            if (uri.startsWith('ns') || uri.contains('/ns/')) {
                 String path = uri
                 String fragment = null
                 int hash = uri.indexOf('#')
@@ -77,7 +77,12 @@ class Main {
                 }
             }
             println "Generating page ${file.path}"
-            file.text = engine.generate(page:page)
+            Binding binding = dsl.bindings
+            String version = '1.0.0'
+            if (binding.hasVariable('version')) {
+                version = binding.getVariable('version')
+            }
+            file.text = engine.generate(page:page, binding:dsl.bindings, version:version)
 //            page.each { Page.Info info -> println "${info.discriminator.name} ${info.uri}"}
         }
     }
@@ -95,7 +100,12 @@ class Main {
         }
 //        URL templateUrl = loader.getResource('template.markup')
         TemplateEngine engine = new MarkupBuilderTemplateEngine(templateFile.text)
-        String html = engine.generate([bindings:dsl.bindings, discriminators:dsl.discriminators])
+        Binding binding = dsl.bindings
+        String version = '1.0.0'
+        if (binding.hasVariable('version')) {
+            version = binding.getVariable('version')
+        }
+        String html = engine.generate([version: version, bindings:dsl.bindings, discriminators:dsl.discriminators])
         File file = new File(outputPath)
         file.text = html
         println "Wrote ${file.path}"
@@ -161,6 +171,10 @@ public class ${className}
 {
     private ${className}() { }
 
+    /**
+     * @deprecated These are no longer reliable. Use an Alias or Uri instead.
+     */
+    @Deprecated
     public static class Values
     {
 """
@@ -205,7 +219,7 @@ public class ${className}
     static void main(args) {
 //        new Main().generateDataTypes()
         CliBuilder cli = new CliBuilder()
-        cli.usage = "java -jar Generator-${Version.version}.jar [-d <filename>] [-h <filename>] [-?] -o <path>"
+        cli.usage = "java -jar discriminator-${Version.version}.jar [-d <filename>] [-h <filename>] [-?] -o <path>"
         cli.header = "Generates documentation for the LAPPS discriminator URI."
         cli.d(longOpt:'datatypes', args:1, required:false, 'generate the DataTypes.txt file')
         cli.h(longOpt:'html', args:1, required:false, 'generate html documentation')
@@ -216,24 +230,22 @@ public class ${className}
         cli.v(longOpt: 'version', required: false, 'display the current version number')
 
         def params = cli.parse(args)
-        if (params['?']) {
+        if (!params || params['?']) {
             cli.usage()
-            return
-        }
-        if (!params) {
             return
         }
         if (params.v) {
            println """
 LAPPS Discriminator Documentation Generator v${Version.version}
-Copyright 2015 The Language Application Grid.
+Copyright 2017 The Language Application Grid.
 
 """
            return
         }
         List<String> fileNames = params.arguments()
         if (fileNames.size() == 0) {
-            println 'No discriminator configuration file provided.'
+            //println 'No discriminator configuration file provided.'
+            cli.usage()
             return
         }
         if (fileNames.size() > 1) {
