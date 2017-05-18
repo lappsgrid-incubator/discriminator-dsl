@@ -237,7 +237,7 @@ public class ${className}
         if (params.v) {
            println """
 LAPPS Discriminator Documentation Generator v${Version.version}
-Copyright 2015 The Language Application Grid.
+Copyright 2017 The Language Application Grid.
 
 """
            return

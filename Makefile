@@ -10,7 +10,10 @@ help:
 	@echo "   clean : removes artifacts from previous builds"
 	@echo "     jar : creates an executable jar file"
 	@echo " install : installs the binary to ~/bin and the vocab project"
-	@echo " release : uploads a .tgz distribution to http://www.anc.org/downloads"
+	@echo " release : creates a .tgz for distribution"
+	@echo "  upload : uploads the tarball to http://www.anc.org/downloads"
+	@echo "  commit : commit the files to GitHub and open a pull request"
+	@echo "     all : does all of the above"
 	@echo "    help : displays this help message"
 
 clean:
