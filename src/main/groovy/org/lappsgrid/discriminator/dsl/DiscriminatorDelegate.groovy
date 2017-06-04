@@ -23,7 +23,7 @@ class DiscriminatorDelegate {
         this.description = description
     }
     void deprecated(String deprecated) {
-        this;deprecated = deprecated
+        this.deprecated = deprecated
     }
     void parents(Object... args) {
         args.each { ancestors << it }
