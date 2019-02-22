@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.anc.maven</groupId>
+        <groupId>org.lappsgrid.maven</groupId>
         <artifactId>groovy-parent-pom</artifactId>
-        <version>2.0.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <groupId>org.lappsgrid.discriminator</groupId>
     <artifactId>dsl</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0-SNAPSHOT</version>
     <name>LAPPS Discriminator DSL</name>
     <description>For parsing LAPPS discriminators from a DSL description.</description>
     <url>https://github.com/oanc/org.lappsgrid.discriminator.dsl</url>
